@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OS期末作业</title>
+    <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/index.css">
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <span class="m-title offset-4 col-4">
+                OS实验
+            </span>
+        </div>
+        
+        <div class="row author">
+            <span class="class offset-4 col-2">
+                软工181
+            </span>
+            <span class="name col-2">
+                李兆荣
+            </span>
+        </div>
+        
+        <div class="row">
+            <div class="col-6 m-card" id="sjf1">
+                <div class="card-title">
+                    SJF（非抢占）
+                </div>
+            </div>
+            <div class="col-6 m-card" id="sjf2">
+                <div class="card-title">
+                    SJF（抢占）
+                </div>
+            </div>
+            <div class="col-6 m-card" id="rr">
+                <div class="card-title">
+                    RR
+                </div>
+            </div>
+            <div class="col-6 m-card" id="yhj">
+                <div class="card-title">
+                    银行家算法
+                </div>
+            </div>
+            <div class="col-6 m-card" id="file">
+                <div class="card-title">
+                    文件复制
+                </div>
+            </div>
+        </div>
+
+        <script>
+            document.getElementById("sjf1").onclick = ()=>{
+                window.location.href = "view/sjf1.html";
+            }
+            document.getElementById("sjf2").onclick = ()=>{
+                window.location.href = "view/sjf2.html";
+            }
+            document.getElementById("rr").onclick = ()=>{
+                window.location.href = "view/rr.html";
+            }
+            document.getElementById("yhj").onclick = ()=>{
+                window.location.href = "view/sjf.html";
+            }
+            document.getElementById("file").onclick = ()=>{
+                window.location.href = "view/file.html";
+            }
+        </script>
+    </div>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/index.css">
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.js"></script>
+    <script src="../js/rr.js"></script>
+</head>
+<body>
+    <div class="contaner">
+        <div class="row">
+            <div class="m-title offset-4 col-4">
+                RR算法
+            </div>
+        </div>
+
+        <div class="row author">
+            <span class="class offset-4 col-2">
+                软工181
+            </span>
+            <span class="name col-2">
+                李兆荣
+            </span>
+        </div>
+
+        <div class="row m-box">
+            <div class="main col-12">
+
+                <div class="m-size">
+                    <div>时间片大小：</div>
+                    <input type="text" name="" id="size" class="in-text">
+                </div>
+
+                <div class="m-input">
+                    <div>各进程运行时间：</div>
+                    <input type="text" name="" id="arr" class="in-text">
+                    <span>（以空格间隔）</span>
+                </div>
+
+                <div class="btns row">
+                    <div class="col-2 offset-3 btn btn-primary btn-block" onclick="openFile()">打开文件</div>
+                    <div class="col-2 offset-2 btn btn-success" onclick="submit()">计算</div>
+                </div>
+                <input type="file" name="" id="file" class="offset-3" style="margin: 10px 0;display: none;">
+                
+            </div>
+            <div class="logout col-12">
+                
+            </div>
+            <div class="gante col-12">
+                
+            </div>
+        </div>
+    </div>
+</body>
+</html>
