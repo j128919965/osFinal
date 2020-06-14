@@ -44,9 +44,30 @@ div.m-card>.card-title{
     height: 180px;
 }
 
+.main-2{
+    height: 250px;
+}
+
+.half-outer{
+    width: 100%;
+    display: flex;
+
+}
+
+.main-half{
+    width: 50%;
+    display: inline-block;
+}
+
 .m-size{
     width: 250px;
     display: flex;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.size-2{
+    width: 100%;
 }
 
 .m-input{
@@ -60,6 +81,7 @@ div.m-card>.card-title{
     border-radius: 10px;
     padding-left: 10px;
     width: 60%;
+    box-sizing: border-box;
 }
 
 .in-text:focus{
@@ -76,6 +98,9 @@ div.m-card>.card-title{
     overflow-y: auto;
 }
 
+.logout-2{
+    height: 500px;
+}
 .gante{
     margin-top: 50px;
     height: 100px;

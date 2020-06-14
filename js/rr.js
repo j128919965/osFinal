@@ -1,7 +1,7 @@
 let f = null;
 function submit(){
     let data = $("#arr").val();
-    let space = parseInt($("size").val());
+    let space = parseInt($("#size").val());
     if(!space){
         alert("请输入时间片大小！");
         return;
@@ -14,6 +14,7 @@ function submit(){
         alert("没有输入数据！")
         return;
     }
+    //TODO
     console.log(data);
 }
 function openFile(){

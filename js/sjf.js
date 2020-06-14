@@ -31,7 +31,6 @@ function openFile(){
 
 
 function sjfCalc(data){
-    let qz = $("qz")[0].checked;
     let len = data.length;
     let time = 0;
 }
