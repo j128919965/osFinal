@@ -13,9 +13,14 @@ function submit(){
         alert("没有输入数据！")
         return;
     }
-
     gante = $(".gante");
-    console.log(data);
+    pqu=new priority_queue()
+    for(i in data){
+        console.log(i,data[i])
+        pi=new pcb(i,0,data[i])
+        pqu.add(pi)
+    }
+    sjfCalc(pqu)
 }
 function openFile(){
     $("#file").click().on("change",function(){
@@ -30,9 +35,28 @@ function openFile(){
 }
 
 
-function sjfCalc(data){
-    let len = data.length;
-    let time = 0;
+function sjfCalc(pcbs){
+    length=pcbs.data.length
+    let st=0
+    let pcblist=[]
+    let lastpcb=null,nowpcb=null
+    let wtime=0
+    while(!pcbs.isempty()){
+        console.log(1)
+        nowpcb=pcbs.dequeue()[0]
+        wtime=wtime+(st-nowpcb.arrivetime)
+        logInfo(st,lastpcb,nowpcb)
+        console.log(nowpcb)
+        nowpcb.start(st)
+        st=nowpcb.needtime+st
+        nowpcb.end(st)
+        lastpcb=nowpcb
+        pcblist.push(nowpcb)
+    }
+    logger.append("平均等待时间：",(wtime/length).toFixed(2));
+    for(i in pcblist){
+        appendGante(pcblist[i].starttime,pcblist[i].endtime,"P"+pcblist[i].id)
+    }
 }
 
 $(()=>{
