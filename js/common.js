@@ -21,12 +21,12 @@ function appendGante(start,end,name){
  * @param {string} n2 开始运行的进程
  */
 function logInfo(start,n1,n2){
-    let str = `在 ${start} 时刻，${n1===null?"":(n1.id+" 停止运行，")}${n2.id}开始运行。<br/>`
+    let str = `在 ${start} 时刻，${n1===null?"":(n1.id+" 停止运行")}${n2===null?"。":("，"+n2.id+"开始运行。")}<br/>`
     logger.append(str);
 }
 
 /** 
- * 教程控制块
+ * 进程控制块
 */
 function pcb(id,arrivetime,needtime){
     this.id=id
