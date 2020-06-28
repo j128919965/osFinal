@@ -1,6 +1,6 @@
 let process_num;
 let source_type_num;
-let allocation=[];
+var allocation=[];
 let max=[];
 let aviliable=[];
 let need=[];
@@ -13,7 +13,6 @@ const get = (e)=>{return document.querySelector(e)};
 
 const openFile = ()=>{
     $.get("../yhjdata.json",(data)=>{
-        console.log(data);
         flag = true;
         document.querySelector("#pro-num").value = data.process_num;
         process_num = data.process_num;
@@ -29,41 +28,56 @@ const openFile = ()=>{
 }
 
 const submit = ()=>{
-    process_num = document.querySelector("#pro-num").value;
-    source_type_num = get("#src-num").value;
-    allocation = get("#allocation").value.split(';').map((x)=>{return x.split(" ")});
-    console.log(allocation)
-    max = get("#max").value.split(';').map((x)=>{return x.split(" ")});
-    aviliable = get("#aviliable").value.split(' ')
+    if(!flag){
+        process_num = document.querySelector("#pro-num").value;
+        source_type_num = get("#src-num").value;
+        allocation = get("#allocation").value.split(';').map((x)=>{return x.split(" ")});
+        console.log(allocation)
+        max = get("#max").value.split(';').map((x)=>{return x.split(" ")});
+        aviliable = get("#aviliable").value.split(' ')
+    }
+
+    
     let p = get("#pro-id").value;
     let request = get("#request").value;
 
-    var proList = new Array(process_num);
+    let proList = new Array(process_num);
 
     for(let i = 0; i< process_num ;i++){
         proList[i] = new process(i,allocation[i],max[i],p===i?request:0);
     }
 
     findsafelist(proList,aviliable);
+
+    // for(let i = 0;i<safe_sequence.length;i++){
+    //     console.log(safe_sequence[i])
+    // }
 }
 
+class process{
 
-function process(id,allocation,max,request){
-    this.id=id; //进程id
-    this.allocation=allocation;
-    this.max=max;
-    this.request=request;
-    this.need=[]
-    this.finish=false
-    for(i in max){
-        this.need.push(max[i]-allocation[i])
+    constructor(id,allocation,max,request){
+        this.id=id; //进程id
+        this.allocation=allocation;
+        this.max=max;
+        if(request===0){
+            this.request = new Array(allocation.length).fill(0);
+        }else{
+            this.request=request;
+        }
+        this.need=[]
+        this.finish=false
+        for(let i in max){
+            this.need.push(max[i]-allocation[i])
+        }
     }
-/**
- * 判断request是否大于need
- * @param {*} aviliable 
- */
-    process.prototype.islegale=function(){
-        for(i in need){
+    
+    /**
+     * 判断request是否大于need
+     * @param {*} aviliable 
+     */
+    islegale=()=>{
+        for(let i in need){
             if(need[i]<request[i])
                 return false
         }
@@ -72,8 +86,8 @@ function process(id,allocation,max,request){
     /**
      * 判断avilable能否满足该进程的request
      */
-    process.prototype.isrequested=function(aviliable){
-        for(i in request){
+    isrequested=(aviliable)=>{
+        for(let i in request){
             if(request[i]>aviliable[i])
                 return false
         }
@@ -82,8 +96,8 @@ function process(id,allocation,max,request){
     /**
      * 判断aviliable能否满足进程的need
      */
-    process.prototype.issafe=function(aviliable){
-        for(i in need){
+    issafe=(aviliable)=>{
+        for(let i in need){
             if(need[i]>aviliable[i])
                 return false
         }
@@ -97,7 +111,6 @@ function process(id,allocation,max,request){
  * @param {*} aviliable //可用资源数列表
  */
 function findsafelist(prolist,aviliable){
-    console.log(prolist)
     let length=prolist.length
     for(i in prolist){
         if(prolist[i].finish)
@@ -124,8 +137,7 @@ function findsafelist(prolist,aviliable){
         for(j in aviliable){
             aviliable[j]+=prolist[i].allocation[j]
         }
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        findsafelist();
+        findsafelist(prolist,aviliable);
         safe_sequence.splice(safe_sequence.length-1,1)
         prolist[i].finish=false;
         for(j in aviliable){
