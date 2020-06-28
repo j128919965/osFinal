@@ -7,6 +7,46 @@ let need=[];
 let request=[];
 let safe_sequence=[]; //安全序列
 let safelist=[]; //安全序列列表
+let flag = false;
+
+const get = (e)=>{return document.querySelector(e)};
+
+const openFile = ()=>{
+    $.get("../yhjdata.json",(data)=>{
+        console.log(data);
+        flag = true;
+        document.querySelector("#pro-num").value = data.process_num;
+        process_num = data.process_num;
+        document.querySelector("#src-num").value = data.source_type_num;
+        source_type_num = data.source_type_num;
+        get("#allocation").value=data.allocation.map((x)=>{return x.join(' ')}).join(';');
+        allocation = data.allocation;
+        get("#max").value=data.max.map((x)=>{return x.join(' ')}).join(';');
+        max = data.max;
+        get("#aviliable").value=data.aviliable.join(' ');
+        aviliable = data.aviliable;
+    })
+}
+
+const submit = ()=>{
+    process_num = document.querySelector("#pro-num").value;
+    source_type_num = get("#src-num").value;
+    allocation = get("#allocation").value.split(';').map((x)=>{return x.split(" ")});
+    console.log(allocation)
+    max = get("#max").value.split(';').map((x)=>{return x.split(" ")});
+    aviliable = get("#aviliable").value.split(' ')
+    let p = get("#pro-id").value;
+    let request = get("#request").value;
+
+    var proList = new Array(process_num);
+
+    for(let i = 0; i< process_num ;i++){
+        proList[i] = new process(i,allocation[i],max[i],p===i?request:0);
+    }
+
+    findsafelist(proList,aviliable);
+}
+
 
 function process(id,allocation,max,request){
     this.id=id; //进程id
@@ -57,6 +97,7 @@ function process(id,allocation,max,request){
  * @param {*} aviliable //可用资源数列表
  */
 function findsafelist(prolist,aviliable){
+    console.log(prolist)
     let length=prolist.length
     for(i in prolist){
         if(prolist[i].finish)
@@ -71,7 +112,7 @@ function findsafelist(prolist,aviliable){
         for(j in aviliable){ //把进程的request加上
             aviliable[j]-=prolist[i].request[j]
             prolist[i].need[j]-=prolist[i].request[j]
-            prolist[i].allocation[j]+=prolist.request[j]
+            prolist[i].allocation[j]+=prolist[i].request[j]
         }
         //进程无法执行，跳过
         if(!prolist[i].issafe(aviliable)){
@@ -83,6 +124,7 @@ function findsafelist(prolist,aviliable){
         for(j in aviliable){
             aviliable[j]+=prolist[i].allocation[j]
         }
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         findsafelist();
         safe_sequence.splice(safe_sequence.length-1,1)
         prolist[i].finish=false;
