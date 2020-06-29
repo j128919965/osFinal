@@ -139,23 +139,23 @@ function findsafelist(prolist,aviliable){
     
     for(let i in prolist){
         if(prolist[i].finish){
-            //console.log("进程："+i+"已完成")
+            console.log("进程："+i+"已完成")
             continue
         }
         //进程无法执行，跳过
         if(!prolist[i].issafe(aviliable)){
-            //console.log("进程："+i+"无法满足need")
+            console.log("进程："+i+"无法满足need")
             continue;
         }
         //进程可以执行，将进程加入安全序列，并释放进程占用的资源
-        //console.log("进程："+i+"进入安全序列")
+        console.log("进程："+i+"进入安全序列")
         prolist[i].finish=true;
         safe_sequence.push(prolist[i].id); 
         for(let j in aviliable){
             aviliable[j]+=prolist[i].allocation[j]
         }
         findsafelist(prolist,aviliable);
-        //console.log("进程："+i+"退出安全序列")
+        console.log("进程："+i+"退出安全序列")
         safe_sequence.splice(safe_sequence.length-1,1)
         //console.log(safe_sequence)
         prolist[i].finish=false;
