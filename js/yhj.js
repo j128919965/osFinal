@@ -51,7 +51,7 @@ const submit = ()=>{
         console.log(proList[i])
     }
     cnt=1;
-    slv(proList,aviliable);
+    findsafelist(proList,aviliable);
 
     // for(let i = 0;i<safe_sequence.length;i++){
     //     console.log(safe_sequence[i])
@@ -109,25 +109,7 @@ class process{
     }
 }
 
-function slv(prolist,aviliable){
-    for(let i in prolist){
-        if(!prolist[i].islegale()){
-            alert("进程："+i+"存在错误，request大于need")
-            break
-        }
-        if(!prolist[i].isrequested(aviliable)){
-            console.log("进程："+i+"无法满足request")
-            continue
-        }
-        for(let j in aviliable){ //把进程的request加上
-            aviliable[j]-=prolist[i].request[j]
-            prolist[i].need[j]-=prolist[i].request[j]
-            prolist[i].allocation[j]+=prolist[i].request[j]
-        }
-    }
-    //console.log(prolist)
-    findsafelist(prolist,aviliable)
-}
+
 /**
  * 寻找安全序列
  * @param {*} prolist //进程列表 
@@ -141,6 +123,21 @@ function findsafelist(prolist,aviliable){
         if(prolist[i].finish){
             console.log("进程："+i+"已完成")
             continue
+        }
+        for(let i in prolist){
+            if(!prolist[i].islegale()){
+                alert("进程："+i+"存在错误，request大于need")
+                break
+            }
+            if(!prolist[i].isrequested(aviliable)){
+                console.log("进程："+i+"无法满足request")
+                continue
+            }
+            for(let j in aviliable){ //把进程的request加上
+                aviliable[j]-=prolist[i].request[j]
+                prolist[i].need[j]-=prolist[i].request[j]
+                prolist[i].allocation[j]+=prolist[i].request[j]
+            }
         }
         //进程无法执行，跳过
         if(!prolist[i].issafe(aviliable)){
